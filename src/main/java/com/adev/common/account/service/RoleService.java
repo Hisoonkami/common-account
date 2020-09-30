@@ -42,6 +42,14 @@ public interface RoleService extends BaseService<Role, Long> {
 	boolean addPermissions(Long id,Long[] permissionIds);
 
 	/**
+	 * 授权
+	 * @param userId
+	 * @param roleId
+	 * @return
+	 */
+	boolean grantAuthorization(Long userId,Long roleId);
+
+	/**
 	 * 获取用户的角色
 	 * @param userId
 	 * @return

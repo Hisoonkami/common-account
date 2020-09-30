@@ -47,10 +47,28 @@ public class RoleController {
 		return ResponseEntity.ok(BaseResult.success(roleIterable.iterator()));
 	}
 
+	/**
+	 * 添加权限到角色
+	 * @param id
+	 * @param permissionIds
+	 * @return
+	 */
 	@RequestMapping(value = {"/{id}/permissions"},method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity<BaseResult> addPermissions(@PathVariable("id") Long id,@RequestParam(value = "permissionIds")Long[] permissionIds){
 		return ResponseEntity.ok(BaseResult.success(roleService.addPermissions(id,permissionIds)));
+	}
+
+	/**
+	 * 授权
+	 * @param userId
+	 * @param roleId
+	 * @return
+	 */
+	@RequestMapping(value = {"/grantAuthorization"},method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<BaseResult> grantAuthorization(@RequestParam("userId") Long userId,@RequestParam(value = "roleId")Long roleId){
+		return ResponseEntity.ok(BaseResult.success(roleService.grantAuthorization(userId,roleId)));
 	}
 
 	@RequestMapping(value = {"/search/findByUser"},method = RequestMethod.GET)

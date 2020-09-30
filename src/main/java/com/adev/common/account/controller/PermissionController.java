@@ -26,22 +26,22 @@ public class PermissionController {
 	@ResponseBody
 	public ResponseEntity<BaseResult> addPermission(@RequestParam("permissionName") String permissionName,
 													@RequestParam("permissionCode") String permissionCode,
-													@RequestParam("remark") String remark){
+													@RequestParam(value = "remark",required = false) String remark){
 		return ResponseEntity.ok(BaseResult.success(permissionService.addPermission(permissionName,permissionCode,remark)));
 	}
 
 	@RequestMapping(value = {"/{id}"},method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity<BaseResult> updatePermission(@PathVariable("id") Long id,
-													   @RequestParam("permissionName") String permissionName,
-													   @RequestParam("permissionCode") String permissionCode,
-													   @RequestParam("remark") String remark){
+													   @RequestParam(value = "permissionName",required = false) String permissionName,
+													   @RequestParam(value = "permissionCode",required = false) String permissionCode,
+													   @RequestParam(value = "remark",required = false) String remark){
 		return ResponseEntity.ok(BaseResult.success(permissionService.updatePermission(id,permissionName,permissionCode,remark)));
 	}
 
 	@RequestMapping(value = {"/{id}"},method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<BaseResult> deleteRole(@PathVariable("id") Long id){
+	public ResponseEntity<BaseResult> deletePermission(@PathVariable("id") Long id){
 		return ResponseEntity.ok(BaseResult.success(permissionService.deletePermission(id)));
 	}
 
@@ -53,7 +53,7 @@ public class PermissionController {
 
 	@RequestMapping(value = {"/search/findByRole"},method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<BaseResult> addPermissions(@RequestParam("roleId") Long roleId){
+	public ResponseEntity<BaseResult> findByRole(@RequestParam("roleId") Long roleId){
 		return ResponseEntity.ok(BaseResult.success(permissionService.findByRole(roleId)));
 	}
 

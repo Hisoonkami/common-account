@@ -2,8 +2,11 @@ package com.adev.common.account.service.impl;
 
 import com.adev.common.account.domain.Permission;
 import com.adev.common.account.domain.Role;
+import com.adev.common.account.domain.UserRole;
 import com.adev.common.account.repository.PermissionRepository;
 import com.adev.common.account.repository.RoleRepository;
+import com.adev.common.account.repository.UserRepository;
+import com.adev.common.account.repository.UserRoleRepository;
 import com.adev.common.account.service.RoleService;
 import com.adev.common.base.service.impl.BaseServiceImpl;
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +24,12 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements Role
 
     @Autowired
     private PermissionRepository permissionRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public RoleServiceImpl(RoleRepository roleRepository) {
@@ -94,8 +103,21 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, Long> implements Role
     }
 
     @Override
+    @Transactional
+    public boolean grantAuthorization(Long userId, Long roleId) {
+        if(userRepository.existsById(userId)&&roleRepository.existsById(roleId)){
+            UserRole userRole=new UserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(roleId);
+            userRoleRepository.save(userRole);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<Role> findByUserId(Long userId) {
-        return null;
+        return userRoleRepository.findRoleByUserId(userId);
     }
 
     private boolean existCode(Long id,String roleCode){

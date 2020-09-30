@@ -8,6 +8,7 @@ import com.adev.common.account.service.RoleService;
 import com.adev.common.base.service.impl.BaseServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +17,16 @@ import java.util.List;
 @Service
 public class PermissionServiceImpl extends BaseServiceImpl<Permission, Long> implements PermissionService {
 
-    @Autowired
-    private PermissionRepository permissionRepository;
+    private final PermissionRepository permissionRepository;
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    public PermissionServiceImpl(PermissionRepository permissionRepository) {
+        super(permissionRepository);
+        this.permissionRepository=permissionRepository;
+    }
 
     @Override
     @Transactional
