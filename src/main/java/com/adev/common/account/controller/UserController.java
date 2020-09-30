@@ -21,20 +21,10 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = {"/login"},method = RequestMethod.GET)
+	@RequestMapping(value = {"/findByLoginName"},method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<BaseResult> login(String loginName, String password){
-		if(StringUtils.isBlank(loginName)||StringUtils.isBlank(password)) {
-			return ResponseEntity.ok(BaseResult.failure(ResultEnum.PARAM_IS_BLANK));
-		}
+	public ResponseEntity<BaseResult> findByLoginName(String loginName){
 		User user=userService.findByLoginName(loginName);
-		if(null==user) {
-			return ResponseEntity.ok(BaseResult.failure(ResultEnum.USER_NOT_EXIST));
-		}
-		
-		if(!MD5Utils.MD5Encode(password, null).equals(user.getPassword())) {
-			return ResponseEntity.ok(BaseResult.failure(ResultEnum.USER_LOGIN_ERROR));
-		}
 		return ResponseEntity.ok(BaseResult.success(user));
 	}
 }

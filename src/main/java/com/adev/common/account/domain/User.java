@@ -1,11 +1,8 @@
 package com.adev.common.account.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.adev.common.base.domian.EntityBase;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Data;
@@ -17,8 +14,9 @@ import net.minidev.json.annotate.JsonIgnore;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @NoArgsConstructor
-public class User {
+public class User extends EntityBase {
 	@Id
+	@GeneratedValue
 	private Long userId;
 	/**
 	 * 登录名
@@ -44,9 +42,4 @@ public class User {
 	 */
 	@Column(length = 20)
 	private String identity;
-	
-	/**
-	 * 创建时间
-	 */
-	private Long timestamp;
 }
