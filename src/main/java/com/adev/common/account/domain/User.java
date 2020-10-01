@@ -36,10 +36,4 @@ public class User extends EntityBase {
 	 */
 	@Column(length = 128)
 	private String username;
-	
-	/**
-	 * 身份
-	 */
-	@Column(length = 20)
-	private String identity;
 }

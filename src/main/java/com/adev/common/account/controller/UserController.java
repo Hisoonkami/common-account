@@ -27,4 +27,11 @@ public class UserController {
 		User user=userService.findByLoginName(loginName);
 		return ResponseEntity.ok(BaseResult.success(user));
 	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<BaseResult> register(String loginName,String password,String username){
+		User user=userService.addUser(loginName,password,username);
+		return ResponseEntity.ok(BaseResult.success(user));
+	}
 }

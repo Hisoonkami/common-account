@@ -11,4 +11,13 @@ public interface UserService extends BaseService<User, Long> {
 	 * @return
 	 */
 	public User findByLoginName(String loginName);
+
+	/**
+	 *
+	 * @param loginName
+	 * @param password
+	 * @param userName
+	 * @return
+	 */
+	User addUser(String loginName,String password,String userName);
 }
