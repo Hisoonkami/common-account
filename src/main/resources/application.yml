@@ -19,7 +19,33 @@ spring:
 # 应用服务web访问端口
 server:
   port: 8081
-
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 10000
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+  threadpool:
+    default:
+      coreSize: 500
+      maximumSize: 1500 # 不开始拒绝HystrixCommands的情况下可以支持的最大并发数
+      allowMaximumSizeToDivergeFromCoreSize: true # 此属性允许maximumSize的配置生效
+      maxQueueSize: -1
+  shareSecurityContext: true
+ribbon:
+  ConnectTimeout: 30000
+  ReadTimeout: 30000
+  MaxAutoRetries: 0 # 对当前Server的重试次数
+  MaxAutoRetriesNextServer: 1 # 切换其它Server的次数
+---
+spring:
+  profiles: test
 # eureka客户端配置
 eureka:
   instance:
@@ -32,5 +58,21 @@ eureka:
   client:
     serviceUrl:
       # 注册中心地址
-      defaultZone: http://eureka1:8761/eureka/,http://eureka2:8762/eureka/
+      defaultZone: http://adev.top:8761/eureka/,http://adev.top:8762/eureka/
+---
+spring:
+  profiles: dev
+# eureka客户端配置
+eureka:
+  instance:
+    # 使用 ip 代替实例名
+    prefer-ip-address: true
+    # 实例的主机名
+    hostname: ${spring.cloud.client.ip-address}
+    # 实例的 ID 规则
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+  client:
+    serviceUrl:
+      # 注册中心地址
+      defaultZone: http://127.0.0.1:8761/eureka/
       
