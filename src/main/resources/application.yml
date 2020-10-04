@@ -16,6 +16,23 @@ spring:
     host: adev.top
     port: 6379
     password: adev.top
+  rabbitmq:
+    host: adev.top
+    port: 5672
+    virtual-host: adev_vhost
+    username: admin
+    password: adev.top
+    publisher-confirms: true #开启消息确认机制
+    publisher-returns: true #开启发送失败退回
+    template:
+      mandatory: true #保证监听有效
+    listener:
+      simple:
+        acknowledge-mode: manual #消费者的ack方式为手动 auto自动 none不会发送ACK（与channelTransacted=true不兼容）
+        concurrency: 1 #最小消费者数量
+        max-concurrency: 10 #最大消费者数量
+        retry:
+          enabled: true  #支持重试/重发
 # 应用服务web访问端口
 server:
   port: 8081

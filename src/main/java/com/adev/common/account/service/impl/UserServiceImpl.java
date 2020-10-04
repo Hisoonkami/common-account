@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.adev.common.account.repository.UserRepository;
 import com.adev.common.account.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, Long> implements UserService {
@@ -26,6 +27,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	}
 
 	@Override
+	@Transactional
 	public User addUser(String loginName, String password, String userName) {
 		if(!existLoginName(null,loginName)){
 			User user=new User();

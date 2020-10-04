@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name="user_info")
 @EntityListeners(AuditingEntityListener.class)
@@ -36,4 +38,9 @@ public class User extends EntityBase {
 	 */
 	@Column(length = 128)
 	private String username;
+
+	/**
+	 * 余额
+	 */
+	private BigDecimal balance;
 }
